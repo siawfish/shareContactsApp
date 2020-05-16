@@ -7,6 +7,7 @@ import Splash from './src/screens/Splash';
 import Intro from './src/screens/Intro';
 import Signin from './src/screens/Signin';
 import Register from './src/screens/Register';
+import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator()
 
@@ -14,26 +15,27 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{
             headerShown:false
           }} 
           name='Splash' 
           component={Splash}
-        /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen
           options={{
             headerShown:false
           }} 
           name='Welcome'
           component={Intro}
-        /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen
           options={{
             headerTitleStyle: {
               fontWeight:'100',
               fontSize:30,
             },
+            headerBackTitleVisible:false,
             headerStyle: {
               backgroundColor:'#cf53b2',
               height:100
@@ -42,13 +44,14 @@ export default function App() {
           }} 
           name='Sign In'
           component={Signin}
-        /> */}
+        />
         <Stack.Screen
           options={{
             headerTitleStyle: {
               fontWeight:'100',
               fontSize:30,
             },
+            headerBackTitleVisible:false,
             headerStyle: {
               backgroundColor:'#cf53b2',
               height:100
@@ -58,7 +61,6 @@ export default function App() {
           name='Register'
           component={Register}
         />
-        {/* <Stack.Screen/> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

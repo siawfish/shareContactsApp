@@ -3,6 +3,10 @@ import { View, StyleSheet, Text, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class Splash extends Component {
+    getStarted = () => {
+        const { navigation } = this.props
+        navigation.navigate('Welcome')
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -14,7 +18,7 @@ export default class Splash extends Component {
                         <Text style={styles.desc}>CODETRAIN CONTACTS SHARING APP PROJECT</Text>
                         <Text style={styles.small}>By @wolfiesiaw</Text>
                     </View>
-                    <TouchableOpacity style={styles.getStartedContainer}>
+                    <TouchableOpacity onPress={this.getStarted} style={styles.getStartedContainer}>
                         <Text style={styles.getStarted}>GET STARTED</Text>
                     </TouchableOpacity>
                 </View>

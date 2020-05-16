@@ -3,6 +3,15 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native'
 
 
 export default class Intro extends Component {
+    signIn = () => {
+        const { navigation } = this.props
+        navigation.navigate('Sign In')
+    }
+
+    register = () => {
+        const { navigation } = this.props
+        navigation.navigate('Register')
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -13,7 +22,7 @@ export default class Intro extends Component {
 
                 <View style={styles.textContainer}>
                     <Text style={styles.textHeading}>
-                        KEEP IN TOUCH WITH PEOPLE WITH THE MOST CONVENIENT WAY EVER
+                        KEEP IN TOUCH WITH PEOPLE IN THE MOST CONVENIENT WAY EVER
                     </Text>
                     <Text style={styles.text}>
                         Sign in or register with your email
@@ -21,10 +30,10 @@ export default class Intro extends Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity onPress={this.register} style={styles.btn}>
                         <Text style={styles.btnText}>REGISTER</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity onPress={this.signIn} style={styles.btn}>
                         <Text style={styles.btnText}>SIGN IN</Text>
                     </TouchableOpacity>
                 </View>
@@ -42,12 +51,12 @@ const styles = StyleSheet.create({
 
     imgContainer: {
         width:'100%',
-        height:450,
+        height:500,
     },
 
     img: {
         width:'100%',
-        height:450,
+        height:500,
     },
 
     textContainer: {
@@ -56,13 +65,15 @@ const styles = StyleSheet.create({
     },
 
     textHeading: {
-        fontWeight: '400',
-        fontSize: 18,
-        marginVertical:20
+        fontWeight: '600',
+        fontSize: 20,
+        marginVertical:20,
+        letterSpacing:3
     },
     
     text: {
-        color:'#aaa'
+        fontWeight:'100',
+        fontSize:18
     },
 
     buttonsContainer: {
