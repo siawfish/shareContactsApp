@@ -15,7 +15,7 @@ export default class Splash extends Component {
                         <Text style={styles.small}>By @wolfiesiaw</Text>
                     </View>
                     <TouchableOpacity style={styles.getStartedContainer}>
-                        <Text style={styles.getStarted} textDecorationStyle='solid' textDecorationColor='red'>GET STARTED</Text>
+                        <Text style={styles.getStarted}>GET STARTED</Text>
                     </TouchableOpacity>
                 </View>
             </View>
