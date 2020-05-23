@@ -7,6 +7,8 @@ import Splash from './src/screens/Splash';
 import Intro from './src/screens/Intro';
 import Signin from './src/screens/Signin';
 import Register from './src/screens/Register';
+import Profile from './src/screens/Profile';
+import HomeScreen from './src/screens/HomeScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator()
@@ -15,7 +17,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/* <Stack.Screen
           options={{
             headerShown:false
           }} 
@@ -60,7 +62,39 @@ export default function App() {
           }}
           name='Register'
           component={Register}
+        /> */}
+        <Stack.Screen
+          options={{
+            headerTitleStyle: {
+              fontWeight:'100',
+              fontSize:30,
+            },
+            headerBackTitleVisible:false,
+            headerStyle: {
+              backgroundColor:'#cf53b2',
+              height:100
+            },
+            headerTintColor:'#fff'
+          }}
+          name='Home'
+          component={HomeScreen}
         />
+        {/* <Stack.Screen
+          options={{
+            headerTitleStyle: {
+              fontWeight:'100',
+              fontSize:30,
+            },
+            headerBackTitleVisible:false,
+            headerStyle: {
+              backgroundColor:'#cf53b2',
+              height:100
+            },
+            headerTintColor:'#fff'
+          }}
+          name='My Profile'
+          component={Profile}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

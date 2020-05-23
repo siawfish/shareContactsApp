@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Image } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 
 export default class Splash extends Component {
     getStarted = () => {
