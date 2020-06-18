@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
+import QRCode from 'react-native-qrcode-svg'
 
 export default class HomeScreen extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            value:'value'
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -10,7 +17,7 @@ export default class HomeScreen extends Component {
                     <Text style={styles.info}>Scan this QR below to share your contacts</Text>
                 </View>
                 <View style={styles.barcodeArea}>
-
+                    <QRCode value={this.state.value} size={300}/>
                 </View>
                 <View style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
@@ -92,5 +99,10 @@ const styles= StyleSheet.create({
         paddingHorizontal:10,
         paddingVertical:5,
         borderRadius:4
+    },
+
+    barcodeArea: {
+        flexDirection: "row",
+        justifyContent:"center"
     }
 })
