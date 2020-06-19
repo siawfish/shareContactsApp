@@ -9,6 +9,7 @@ import Signin from './src/screens/Signin';
 import Register from './src/screens/Register';
 import Profile from './src/screens/Profile';
 import HomeScreen from './src/screens/HomeScreen';
+import BarcodeScanner from './src/screens/BarCodeScanner'
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator()
@@ -78,6 +79,13 @@ export default function App() {
           }}
           name='Home'
           component={HomeScreen}
+        />
+        <Stack.Screen
+          options={{
+            headerShown: false
+          }}
+          name='Scanner'
+          component={BarcodeScanner}
         />
         {/* <Stack.Screen
           options={{

@@ -6,8 +6,12 @@ export default class HomeScreen extends Component {
     constructor(props){
         super(props)
         this.state = {
-            value:'value'
+            value:'Hello Evelyn'
         }
+    }
+    scan = () => {
+        const { navigation } = this.props
+        navigation.navigate('Scanner')
     }
     render() {
         return (
@@ -28,7 +32,7 @@ export default class HomeScreen extends Component {
                 </View>
                 <View style={styles.addConnectArea}>
                     <Text>Want to add new connection?</Text>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity onPress={this.scan} style={styles.btn}>
                         <Text style={styles.btnText}>Scan QR</Text>
                     </TouchableOpacity>
                 </View>
