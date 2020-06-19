@@ -17,13 +17,7 @@ export default function BarcodeScanner(props) {
         setScanned(true);
         alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     };
-
-    if (hasPermission === null) {
-        // Works on both Android and iOS
-        Alert.alert(
-            'Requesting Permission...'
-        )
-    }
+    
     if (hasPermission === false) {
         // Works on both Android and iOS
         Alert.alert(

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
+import { connect } from 'react-redux'
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -110,3 +111,12 @@ const styles= StyleSheet.create({
         justifyContent:"center"
     }
 })
+
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        auth:state.userCred
+    }
+}
+
+export default connect(mapStateToProps)(HomeScreen)

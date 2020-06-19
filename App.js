@@ -11,100 +11,16 @@ import Profile from './src/screens/Profile';
 import HomeScreen from './src/screens/HomeScreen';
 import BarcodeScanner from './src/screens/BarCodeScanner'
 import { Ionicons } from '@expo/vector-icons';
+import Navigation from './src/screens/Navigation';
+import { Provider } from 'react-redux'
+import store from './src/store/store'
 
-const Stack = createStackNavigator()
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen
-          options={{
-            headerShown:false
-          }} 
-          name='Splash' 
-          component={Splash}
-        />
-        <Stack.Screen
-          options={{
-            headerShown:false
-          }} 
-          name='Welcome'
-          component={Intro}
-        />
-        <Stack.Screen
-          options={{
-            headerTitleStyle: {
-              fontWeight:'100',
-              fontSize:30,
-            },
-            headerBackTitleVisible:false,
-            headerStyle: {
-              backgroundColor:'#cf53b2',
-              height:100
-            },
-            headerTintColor:'#fff'
-          }} 
-          name='Sign In'
-          component={Signin}
-        />
-        <Stack.Screen
-          options={{
-            headerTitleStyle: {
-              fontWeight:'100',
-              fontSize:30,
-            },
-            headerBackTitleVisible:false,
-            headerStyle: {
-              backgroundColor:'#cf53b2',
-              height:100
-            },
-            headerTintColor:'#fff'
-          }}
-          name='Register'
-          component={Register}
-        /> */}
-        <Stack.Screen
-          options={{
-            headerTitleStyle: {
-              fontWeight:'100',
-              fontSize:30,
-            },
-            headerBackTitleVisible:false,
-            headerStyle: {
-              backgroundColor:'#cf53b2',
-              height:100
-            },
-            headerTintColor:'#fff'
-          }}
-          name='Home'
-          component={HomeScreen}
-        />
-        <Stack.Screen
-          options={{
-            headerShown: false
-          }}
-          name='Scanner'
-          component={BarcodeScanner}
-        />
-        {/* <Stack.Screen
-          options={{
-            headerTitleStyle: {
-              fontWeight:'100',
-              fontSize:30,
-            },
-            headerBackTitleVisible:false,
-            headerStyle: {
-              backgroundColor:'#cf53b2',
-              height:100
-            },
-            headerTintColor:'#fff'
-          }}
-          name='My Profile'
-          component={Profile}
-        /> */}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <Navigation/>
+    </Provider>
   );
 }
 
