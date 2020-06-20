@@ -3,6 +3,13 @@ import { View, StyleSheet, TouchableOpacity, Text, TextInput } from 'react-nativ
 import { FontAwesome } from '@expo/vector-icons'
 
 export default class Register extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            err:''
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>

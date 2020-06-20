@@ -1,10 +1,22 @@
 let initState = {
-    userCred:'',
-    err:'',
+    loggedIn:false,
+    userCred:null,
+    err:null,
 }
 
 export default function authReducer(state = initState, action){
     switch(action.type){
+        case "Auth Success":
+            return {
+                ...state,
+                loggedIn: true,
+                userCred:action.user
+            }
+        case "Auth ERR":
+            return {
+                ...state,
+                err:action.err
+            }
         default:
             return state
     }
