@@ -19,6 +19,10 @@ class Register extends Component {
         }
     }
 
+    componentDidMount(){
+        
+    }
+
     handleInputChange = (name, value) => {
         this.setState({
             [name]:value
@@ -40,7 +44,7 @@ class Register extends Component {
             twitter : this.state.twitter,
             linkedIn : this.state.linkedIn
         }
-        const validateName = /^[A-Z][a-zA-Z]{3,}(?: [A-Z][a-zA-Z]*){0,2}$/
+        const validateName = /^[a-zA-Z ]+$/
         const validateEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
         const validateTwitter = /^[A-Za-z0-9_]{1,15}$/
         const validatePass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
@@ -49,7 +53,8 @@ class Register extends Component {
                 err:'Enter your name'
             })
             return false
-        } else if(!cred.name.match(validateName)){
+        }
+        if(!cred.name.match(validateName)){
             this.setState({
                 err:'Enter a valid name'
             })
@@ -82,6 +87,9 @@ class Register extends Component {
         this.props.register(cred)
     }
     render() {
+        if(this.props.loggedIn){
+            this.props.navigation.navigate('Home')
+        }
         return (
             <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
                 <TouchableOpacity style={styles.addImgContainer}>
@@ -187,10 +195,11 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {    
     return {
         err:state.err,
-        authStatus:state.userCred
+        authStatus:state.userCred,
+        loggedIn:state.loggedIn
     }
 }
 
