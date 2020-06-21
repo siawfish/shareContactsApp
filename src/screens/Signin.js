@@ -1,13 +1,23 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { login } from '../store/actions/authActions'
 
-export default class Signin extends Component {
+class Signin extends Component {
+    constructor(props){
+        super(props)
+        this.state= {
+            email:null,
+            pass:null
+        }
+    }
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.imgContainer}>
                     <Image style={styles.img} source={require('../../assets/signin.png')}/>
                 </View>
+                {this.props.err ? <Text style={styles.err}>{this.props.err}</Text> : null}
                 <View style={styles.formContainer}>
                     <View style={styles.inputContainer}>
                         <Text>Email</Text>
@@ -25,7 +35,6 @@ export default class Signin extends Component {
                         <TouchableOpacity style={styles.underline}>
                             <Text style={styles.reset}>Reset Password</Text>
                         </TouchableOpacity>
-                        
                     </View>
                 </View>
             </View>
@@ -42,6 +51,13 @@ const styles = StyleSheet.create({
     imgContainer: {
         width:'100%',
         height:250,
+    },
+
+    err: {
+        paddingVertical:10,
+        alignSelf:"center",
+        color:'red',
+        fontWeight:'bold'
     },
 
     img: {
@@ -98,3 +114,16 @@ const styles = StyleSheet.create({
         paddingBottom:3
     }
 })
+
+const mapStateToProps = (state) => {
+    return {
+        err:state.err,
+        loggedIn:state.loggedIn
+    }
+}
+
+const mapDispatchToProps = {
+    login
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signin)
