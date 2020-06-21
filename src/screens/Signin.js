@@ -11,7 +11,24 @@ class Signin extends Component {
             pass:null
         }
     }
+
+    handleInputChange = (name, value) => {
+        this.setState({
+            [name]:value
+        })
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        
+        let email = this.state.email
+        let pass = this.state.pass
+
+        this.props.login(email, pass)
+    }
+
     render() {
+        {this.props.loggedIn ? this.props.navigation.navigate('Home') : null}
         return (
             <View style={styles.container}>
                 <View style={styles.imgContainer}>
@@ -21,18 +38,18 @@ class Signin extends Component {
                 <View style={styles.formContainer}>
                     <View style={styles.inputContainer}>
                         <Text>Email</Text>
-                        <TextInput placeholder='xyz@codetrain.com' placeholderTextColor='#aaa'/>
+                        <TextInput keyboardType='email-address' onChangeText={(text)=>this.handleInputChange('email', text)} placeholder='xyz@codetrain.com' placeholderTextColor='#aaa'/>
                     </View>
                     <View style={styles.inputNBContainer}>
                         <Text>Password</Text>
-                        <TextInput placeholder='Password' placeholderTextColor='#aaa' secureTextEntry={true}/>
+                        <TextInput secureTextEntry={true} onChangeText={(text)=>this.handleInputChange('pass', text)} placeholder='Password' placeholderTextColor='#aaa' secureTextEntry={true}/>
                     </View>
                     <TouchableOpacity style={styles.btn}>
                         <Text style={styles.btnText}>SIGN IN</Text>
                     </TouchableOpacity>
                     <View style={styles.resetContainer}>
                         <Text>Forgot Password?</Text>
-                        <TouchableOpacity style={styles.underline}>
+                        <TouchableOpacity onPress={this.onSubmit} style={styles.underline}>
                             <Text style={styles.reset}>Reset Password</Text>
                         </TouchableOpacity>
                     </View>

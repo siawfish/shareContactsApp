@@ -19,10 +19,6 @@ class Register extends Component {
         }
     }
 
-    componentDidMount(){
-        
-    }
-
     handleInputChange = (name, value) => {
         this.setState({
             [name]:value
