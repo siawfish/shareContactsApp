@@ -38,8 +38,8 @@ export function login(email, pass){
         .signInWithEmailAndPassword(email, pass)
         .then((res)=>{
             dispatch({
-                type:"Auth Success",
-                user: res.user
+                type:"Login Success",
+                user:res.user
             })
         })
         .catch((err)=>{
@@ -52,17 +52,12 @@ export function login(email, pass){
 }
 
 export function logout(){
-    return async (dispatch) => {        
+    return async (dispatch) => {       
         await firebase
         .auth()
-        .signOut()
-        .then(()=>{
-            dispatch({
-                type:"Signed Out"
-            })
-        })
-        .catch((err)=>{
-            console.log(err)
+        .signOut()        
+        dispatch({
+            type:"Signed Out"
         })
     }
 }

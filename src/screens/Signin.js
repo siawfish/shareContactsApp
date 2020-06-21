@@ -19,8 +19,7 @@ class Signin extends Component {
     }
 
     onSubmit = (e) => {
-        e.preventDefault()
-        
+        e.preventDefault()        
         let email = this.state.email
         let pass = this.state.pass
 
@@ -44,12 +43,12 @@ class Signin extends Component {
                         <Text>Password</Text>
                         <TextInput secureTextEntry={true} onChangeText={(text)=>this.handleInputChange('pass', text)} placeholder='Password' placeholderTextColor='#aaa' secureTextEntry={true}/>
                     </View>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity onPress={this.onSubmit} style={styles.btn}>
                         <Text style={styles.btnText}>SIGN IN</Text>
                     </TouchableOpacity>
                     <View style={styles.resetContainer}>
                         <Text>Forgot Password?</Text>
-                        <TouchableOpacity onPress={this.onSubmit} style={styles.underline}>
+                        <TouchableOpacity style={styles.underline}>
                             <Text style={styles.reset}>Reset Password</Text>
                         </TouchableOpacity>
                     </View>
