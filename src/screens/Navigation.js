@@ -18,7 +18,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{
             headerShown:false
           }} 
@@ -63,7 +63,7 @@ export default function Navigation() {
           }}
           name='Register'
           component={Register}
-        /> */}
+        />
         <Stack.Screen
           options={{
             headerTitleStyle: {
@@ -87,7 +87,7 @@ export default function Navigation() {
           name='Scanner'
           component={BarcodeScanner}
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           options={{
             headerTitleStyle: {
               fontWeight:'100',
@@ -102,7 +102,7 @@ export default function Navigation() {
           }}
           name='My Profile'
           component={Profile}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

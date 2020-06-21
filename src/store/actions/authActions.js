@@ -1,10 +1,9 @@
-import firebase from '../../firebase/confiq'
-
 export function register({info}){
-    return (dispatch) => {
+    return async (dispatch) => {
         firebase
+        .firestore()
         .collection('users')
-        .set(info)
+        .add({info})
         .then(()=>{
             firebase
             .auth()

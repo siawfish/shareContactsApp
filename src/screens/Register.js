@@ -1,56 +1,132 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, TextInput } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
+import { connect } from 'react-redux'
+import { register } from '../store/actions/authActions'
 
-export default class Register extends Component {
+class Register extends Component {
     constructor(props){
         super(props)
         this.state = {
+            name:'',
+            email:'',
+            pass:'',
+            phone:'',
+            role:'',
+            twitter:'',
+            linkedIn:'',
             err:''
         }
     }
 
+    handleInputChange = (name, value) => {
+        this.setState({
+            [name]:value
+        })
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault()
+        this.setState({
+            err:''
+        })
+
+        let cred = {
+            name : this.state.name,
+            email : this.state.email,
+            pass: this.state.pass,
+            phone : this.state.phone,
+            role : this.state.role,
+            twitter : this.state.twitter,
+            linkedIn : this.state.linkedIn
+        }
+        const validateName = /^[A-Z][a-zA-Z]{3,}(?: [A-Z][a-zA-Z]*){0,2}$/
+        const validateEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        const validateTwitter = /^[A-Za-z0-9_]{1,15}$/
+        const validatePass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/
+        if(cred.name==""){
+            this.setState({
+                err:'Enter your name'
+            })
+            return false
+        } else if(!cred.name.match(validateName)){
+            this.setState({
+                err:'Enter a valid name'
+            })
+            return false
+        }
+        if(!validateEmail.test(cred.email)){
+            this.setState({
+                err:'Enter a valid email address'
+            })
+            return false
+        }
+        if(cred.role==""){
+            this.setState({
+                err:'Enter your role'
+            })
+            return false
+        }
+        if(!cred.twitter.match(validateTwitter)){
+            this.setState({
+                err:'Enter a valid twitter handle'
+            })
+            return false
+        }
+        if(!cred.pass.match(validatePass)){
+            this.setState({
+                err:'Password must be 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character'
+            })
+            return false
+        }
+        this.props.register(cred)
+    }
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
                 <TouchableOpacity style={styles.addImgContainer}>
                     <FontAwesome name="image" size={50} color="black" />
                     <Text style={styles.addPhoto}>ADD PROFILE PHOTO</Text>
                 </TouchableOpacity>
                 <View style={styles.form}>
-                    <View style={styles.inputsContainer}>
-
+                    {this.state.err ? <Text style={styles.err}>{this.state.err}</Text> : null}
+                    {this.props.err ? <Text style={styles.err}>{this.props.err}</Text> : null}
+                    <ScrollView style={styles.inputsContainer} showsVerticalScrollIndicator='false'>
                         <View style={styles.inputContainer}>
                             <Text>Full Name</Text>
-                            <TextInput placeholder='Wolfie Siaw' placeholderTextColor='#aaa'/>
+                            <TextInput autoFocus={true} autoCapitalize='words' onChangeText={(text)=>{this.handleInputChange('name', text)}} placeholder='Wolfie Siaw' placeholderTextColor='#aaa'/>
                         </View>
                         <View style={styles.inputContainer}>
                             <Text>Email</Text>
-                            <TextInput placeholder='wolfiesiaw@mail.com' placeholderTextColor='#aaa'/>
+                            <TextInput keyboardType='email-address' onChangeText={(text)=>{this.handleInputChange('email', text)}} placeholder='wolfiesiaw@mail.com' placeholderTextColor='#aaa'/>
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <Text>Password</Text>
+                            <TextInput secureTextEntry={true} onChangeText={(text)=>{this.handleInputChange('pass', text)}} placeholderTextColor='#aaa'/>
                         </View>
                         <View style={styles.inputContainer}>
                             <Text>Phone Number</Text>
-                            <TextInput placeholder='+233 577 009 890' placeholderTextColor='#aaa'/>
+                            <TextInput keyboardType='number-pad' onChangeText={(text)=>{this.handleInputChange('phone', text)}} placeholder='+233 577 009 890' placeholderTextColor='#aaa'/>
                         </View>
                         <View style={styles.inputContainer}>
                             <Text>Role</Text>
-                            <TextInput placeholder='Software Engineer' placeholderTextColor='#aaa'/>
+                            <TextInput onChangeText={(text)=>{this.handleInputChange('role', text)}} placeholder='Software Engineer' placeholderTextColor='#aaa'/>
                         </View>
                         <View style={styles.inputContainer}>
                             <Text>Twitter</Text>
-                            <TextInput placeholder='@siawfish' placeholderTextColor='#aaa'/>
+                            <TextInput keyboardType='twitter' onChangeText={(text)=>{this.handleInputChange('twitter', text)}} placeholder='@siawfish' placeholderTextColor='#aaa'/>
                         </View>
                         <View style={styles.inputContainer}>
                             <Text>LinkedIn</Text>
-                            <TextInput placeholder='mcamanor' placeholderTextColor='#aaa'/>
+                            <TextInput onChangeText={(text)=>{this.handleInputChange('linkedIn', text)}} placeholder='mcamanor' placeholderTextColor='#aaa'/>
                         </View>
 
-                    </View>
-                    <TouchableOpacity style={styles.registerBtn}>
+                    </ScrollView>
+                    <TouchableOpacity onPress={this.onSubmit} style={styles.registerBtn}>
                         <Text style={styles.register}>REGISTER</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
@@ -72,6 +148,13 @@ const styles = StyleSheet.create({
         fontSize:12
     },
 
+    err: {
+        paddingVertical:10,
+        alignSelf:"center",
+        color:'red',
+        fontWeight:'bold'
+    },
+
     form: {
         flex:1,
         marginHorizontal:30,
@@ -91,8 +174,9 @@ const styles = StyleSheet.create({
         paddingVertical:20,
         backgroundColor:'#cf53b2',
         alignItems:'center',
-        marginVertical:20,
-        borderRadius:4
+        borderRadius:4,
+        marginTop:20,
+        marginBottom: 40
     },
 
     register: {
@@ -102,3 +186,16 @@ const styles = StyleSheet.create({
         fontWeight:'400'
     }
 })
+
+const mapStateToProps = (state) => {
+    return {
+        err:state.err,
+        authStatus:state.userCred
+    }
+}
+
+const mapDispatchToProps = {
+    register
+}
+
+export default connect (mapStateToProps, mapDispatchToProps)(Register)
