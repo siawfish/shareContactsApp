@@ -5,18 +5,17 @@ import { connect } from 'react-redux'
 import { syncUser } from '../store/actions/authActions'
 
 class HomeScreen extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            value:'Hello Evelyn'
-        }
-    }
     componentDidMount(){
         this.props.syncUser(this.props.cred)
     }
     scan = () => {
         const { navigation } = this.props
         navigation.navigate('Scanner')
+    }
+
+    gotoPro = () => {
+        const { navigation } = this.props
+        navigation.navigate('My Profile', {uid:this.props.cred})
     }
     render() {        
         return (
@@ -28,13 +27,13 @@ class HomeScreen extends Component {
                 <View style={styles.barcodeArea}>
                     <QRCode value={this.props.cred} size={300}/>
                 </View>
-                <View style={styles.profileArea}>
+                <TouchableOpacity onPress={this.gotoPro} style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
                     <View>
                         <Text style={styles.name}>{this.props.user.name && this.props.user.name}</Text>
                         <Text style={styles.title}>{this.props.user.role && this.props.user.role}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.addConnectArea}>
                     <Text>Want to add new connection?</Text>
                     <TouchableOpacity onPress={this.scan} style={styles.btn}>
@@ -66,7 +65,7 @@ const styles= StyleSheet.create({
     },
 
     infoArea: {
-        marginVertical:40
+        marginTop:40
     },
 
     name: {
