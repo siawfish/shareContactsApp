@@ -38,6 +38,11 @@ export default function authReducer(state = initState, action){
                 ...state,
                 err:null
             }
+        case "User":
+            return {
+                ...state,
+                userInfo:action.user
+            }
         default:
             return state
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { connect } from 'react-redux'
+import { syncUser } from '../store/actions/authActions'
 
 class HomeScreen extends Component {
     constructor(props){
@@ -10,11 +11,14 @@ class HomeScreen extends Component {
             value:'Hello Evelyn'
         }
     }
+    componentDidMount(){
+        this.props.syncUser(this.props.cred)
+    }
     scan = () => {
         const { navigation } = this.props
         navigation.navigate('Scanner')
     }
-    render() {
+    render() {        
         return (
             <View style={styles.container}>
                 <View style={styles.infoArea}>
@@ -22,13 +26,13 @@ class HomeScreen extends Component {
                     <Text style={styles.info}>Scan this QR below to share your contacts</Text>
                 </View>
                 <View style={styles.barcodeArea}>
-                    <QRCode value={this.state.value} size={300}/>
+                    <QRCode value={this.props.cred} size={300}/>
                 </View>
                 <View style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
                     <View>
-                        <Text style={styles.name}>{this.props.cred.name}</Text>
-                        <Text style={styles.title}>{this.props.cred.role}</Text>
+                        <Text style={styles.name}>{this.props.user.name && this.props.user.name}</Text>
+                        <Text style={styles.title}>{this.props.user.role && this.props.user.role}</Text>
                     </View>
                 </View>
                 <View style={styles.addConnectArea}>
@@ -112,11 +116,16 @@ const styles= StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {    
+const mapStateToProps = (state) => {        
     return {
         auth:state.loggedIn,
-        cred:state.userCred
+        cred:state.userCred.user.uid,
+        user:state.userInfo
     }
 }
 
-export default connect(mapStateToProps)(HomeScreen)
+const mapDispatchToProps = {
+    syncUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

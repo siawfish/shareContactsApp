@@ -71,22 +71,19 @@ export function clearErr(){
     }
 }
 
-export function syncUser(){
+export function syncUser(uid){
     return async(dispatch)=>{
         await firebase
         .firestore()
         .collection('users')
-        .onSnapshot((snapshot)=>{
-            let user = snapshot.docs.map((doc)=>{
-                return {
-                    ...doc.data(),
-                    uid:doc.id
-                }
-            })
+        .doc(uid)
+        .get()
+        .then((res)=>{
             dispatch({
                 type:"User",
-                user
+                user:res.data()
             })
         })
+            
     }
 }
