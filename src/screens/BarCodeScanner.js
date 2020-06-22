@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Alert } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 export default function BarcodeScanner(props) {
@@ -42,7 +42,37 @@ export default function BarcodeScanner(props) {
             style={StyleSheet.absoluteFillObject}
         />
 
-        {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+        {scanned && 
+        <View style={styles.addConnectArea}>
+            <Text>Want to add new connection?</Text>
+            <TouchableOpacity onPress={() => setScanned(false)} style={styles.btn}>
+                <Text style={styles.btnText}>Scan QR</Text>
+            </TouchableOpacity>
+        </View>}
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    addConnectArea: {
+        backgroundColor:'#999',
+        flexDirection:'row',
+        paddingVertical:30,
+        paddingHorizontal:40,
+        borderTopWidth:1,
+        borderTopColor:'#aaa',
+        marginLeft:-30,
+        marginRight:-30,
+        alignItems:"center",
+        justifyContent: "center"
+    },
+
+    btn: {
+        marginLeft:20,
+        backgroundColor:'#cf53b2',
+        paddingHorizontal:10,
+        paddingVertical:5,
+        borderRadius:4
+    }
+})
+
