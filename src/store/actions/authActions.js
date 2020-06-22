@@ -9,7 +9,8 @@ export function register(info){
             await firebase
                 .firestore()
                 .collection('users')
-                .add(info)
+                .doc(user.user.uid)
+                .set(info)
                 .then(()=>{
                     dispatch({
                         type:"Auth Success",
@@ -58,6 +59,14 @@ export function logout(){
         .signOut()        
         dispatch({
             type:"Signed Out"
+        })
+    }
+}
+
+export function clearErr(){
+    return (dispatch)=> {
+        dispatch({
+            type:"Clear Errors"
         })
     }
 }

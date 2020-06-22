@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, TextInput, KeyboardAvoidingView, ScrollView } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { connect } from 'react-redux'
-import { register } from '../store/actions/authActions'
+import { register, clearErr } from '../store/actions/authActions'
 
 class Register extends Component {
     constructor(props){
@@ -17,6 +17,10 @@ class Register extends Component {
             linkedIn:'',
             err:''
         }
+    }
+
+    componentDidMount(){
+        this.props.clearErr()
     }
 
     handleInputChange = (name, value) => {
@@ -200,7 +204,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    register
+    register,
+    clearErr
 }
 
 export default connect (mapStateToProps, mapDispatchToProps)(Register)

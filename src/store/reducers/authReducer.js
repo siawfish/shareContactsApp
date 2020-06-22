@@ -7,7 +7,7 @@ let initState = {
 
 export default function authReducer(state = initState, action){
     switch(action.type){
-        case "Auth Success":
+        case "Auth Success":            
             Alert.alert('SUCCESS', 'You are successfully registered')
             return {
                 ...state,
@@ -30,6 +30,11 @@ export default function authReducer(state = initState, action){
                 loggedIn:false,
                 userCred:null,
                 err:null,
+            }
+        case "Clear Errors":
+            return {
+                ...state,
+                err:null
             }
         default:
             return state

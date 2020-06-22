@@ -27,8 +27,8 @@ class HomeScreen extends Component {
                 <View style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
                     <View>
-                        <Text style={styles.name}>Gerald Amanor</Text>
-                        <Text style={styles.title}>Head of Engineering</Text>
+                        <Text style={styles.name}>{this.props.cred.name}</Text>
+                        <Text style={styles.title}>{this.props.cred.role}</Text>
                     </View>
                 </View>
                 <View style={styles.addConnectArea}>
@@ -112,9 +112,10 @@ const styles= StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {    
     return {
-        auth:state.userCred
+        auth:state.loggedIn,
+        cred:state.userCred
     }
 }
 

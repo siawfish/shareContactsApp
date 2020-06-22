@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { login } from '../store/actions/authActions'
+import { login, clearErr } from '../store/actions/authActions'
 
 class Signin extends Component {
     constructor(props){
@@ -10,6 +10,10 @@ class Signin extends Component {
             email:null,
             pass:null
         }
+    }
+
+    componentDidMount(){
+        this.props.clearErr()
     }
 
     handleInputChange = (name, value) => {
@@ -139,7 +143,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    login
+    login,
+    clearErr
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signin)
