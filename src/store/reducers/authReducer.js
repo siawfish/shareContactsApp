@@ -3,6 +3,7 @@ let initState = {
     loggedIn:false,
     userCred:null,
     err:null,
+    userInfo:null
 }
 
 export default function authReducer(state = initState, action){
@@ -30,6 +31,7 @@ export default function authReducer(state = initState, action){
                 loggedIn:false,
                 userCred:null,
                 err:null,
+                userInfo:null
             }
         case "Clear Errors":
             return {

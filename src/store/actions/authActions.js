@@ -70,3 +70,23 @@ export function clearErr(){
         })
     }
 }
+
+export function syncUser(){
+    return async(dispatch)=>{
+        await firebase
+        .firestore()
+        .collection('users')
+        .onSnapshot((snapshot)=>{
+            let user = snapshot.docs.map((doc)=>{
+                return {
+                    ...doc.data(),
+                    uid:doc.id
+                }
+            })
+            dispatch({
+                type:"User",
+                user
+            })
+        })
+    }
+}
