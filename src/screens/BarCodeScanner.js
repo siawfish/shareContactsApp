@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Alert, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { connect } from 'react-redux'
+import { syncCon } from '../store/actions/authActions'
 
-export default function BarcodeScanner(props) {
+
+function BarcodeScanner(props) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [valid, setInValid] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -13,10 +17,19 @@ export default function BarcodeScanner(props) {
         })();
     }, []);
 
-    const handleBarCodeScanned = ({ type, data }) => {
+    handleBarCodeScanned = ({ type, data }) => {
+        props.syncCon(data)
         setScanned(true);
-        props.navigation.navigate('My Profile', {uid:data});
     };
+
+    if (scanned === true){
+        if(typeof(props.info)=="undefined"){
+            Alert.alert('Sorry!', 'Invalid barcode', [{ text: 'OK', onPress: () => props.navigation.goBack() }], { cancelable: false })
+            return false
+        }
+        console.log(props.info);
+        props.navigation.navigate('My Profile', {...props.info});
+    }
     
     if (hasPermission === false) {
         // Works on both Android and iOS
@@ -75,4 +88,17 @@ const styles = StyleSheet.create({
         borderRadius:4
     }
 })
+
+const mapStateToProps = (state)=> {
+    return {
+        user:state.userInfo,
+        info:state.info
+    }
+}
+
+const mapDispatchToProps = {
+    syncCon
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarcodeScanner)
 

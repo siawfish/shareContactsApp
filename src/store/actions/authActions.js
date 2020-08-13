@@ -14,7 +14,7 @@ export function register(info){
                 .then(()=>{
                     dispatch({
                         type:"Auth Success",
-                        user
+                        user:user.user
                     })
                 })
                 .catch((err)=>{
@@ -38,9 +38,20 @@ export function login(email, pass){
         .auth()
         .signInWithEmailAndPassword(email, pass)
         .then((res)=>{
-            dispatch({
-                type:"Login Success",
-                user:res.user
+            var id = res.user.uid;
+            firebase
+            .firestore()
+            .collection('users')
+            .doc(id)
+            .get()
+            .then((res)=>{
+                dispatch({
+                    type:"User",
+                    user:{...res.data(), uid:id}
+                })
+            })
+            .catch((err)=>{
+                console.log(err.message);
             })
         })
         .catch((err)=>{
@@ -81,8 +92,31 @@ export function syncUser(uid){
         .then((res)=>{
             dispatch({
                 type:"User",
+                user:{...res.data(), uid}
+            })
+        })
+        .catch((err)=>{
+            console.log(err.message);
+        })
+            
+    }
+}
+
+export function syncCon(uid){
+    return async(dispatch)=>{
+        await firebase
+        .firestore()
+        .collection('users')
+        .doc(uid)
+        .get()
+        .then((res)=>{
+            dispatch({
+                type:"Contact",
                 user:res.data()
             })
+        })
+        .catch((err)=>{
+            console.log(err.message);
         })
             
     }

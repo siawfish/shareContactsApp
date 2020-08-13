@@ -15,7 +15,6 @@ export default class Intro extends Component {
     render() {
         return (
             <View style={styles.container}>
-                
                 <View style={styles.imgContainer}>
                     <Image style={styles.img} source={require('../../assets/welcome.png')}/>
                 </View>

@@ -38,7 +38,7 @@ class Navigation extends Component {
                   height:100
                 },
                 headerTintColor:'#fff',
-                headerRight:()=><TouchableOpacity onPress={this.logout} style={{marginRight:30}}><Ionicons name="ios-power" size={24} color="red" /></TouchableOpacity>
+                headerRight:()=><TouchableOpacity onPress={this.logout} style={{marginRight:30}}><Ionicons name="ios-power" size={24} color="black" /></TouchableOpacity>
               }}
               name='Home'
               component={HomeScreen}
@@ -62,7 +62,7 @@ class Navigation extends Component {
                   height:100
                 },
                 headerTintColor:'#fff',
-                headerRight:()=><TouchableOpacity onPress={this.logout} style={{marginRight:30}}><Ionicons name="ios-power" size={24} color="red" /></TouchableOpacity>
+                headerRight:()=><TouchableOpacity onPress={this.logout} style={{marginRight:30}}><Ionicons name="ios-power" size={24} color="black" /></TouchableOpacity>
               }}
               name='My Profile'
               component={Profile}

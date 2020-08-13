@@ -1,9 +1,8 @@
 import { Alert } from 'react-native'
 let initState = {
     loggedIn:false,
-    userCred:null,
-    err:null,
-    userInfo:null
+    creds:null,
+    err:null
 }
 
 export default function authReducer(state = initState, action){
@@ -11,15 +10,8 @@ export default function authReducer(state = initState, action){
         case "Auth Success":            
             Alert.alert('SUCCESS', 'You are successfully registered')
             return {
-                ...state,
                 loggedIn: true,
-                userCred:action.user
-            }
-        case "Login Success":
-            return {
-                ...state,
-                loggedIn: true,
-                userCred:action.user
+                creds:action.user
             }
         case "Auth ERR":
             return {
@@ -29,19 +21,13 @@ export default function authReducer(state = initState, action){
         case "Signed Out":
             return {
                 loggedIn:false,
-                userCred:null,
-                err:null,
-                userInfo:null
+                creds:null,
+                err:null
             }
         case "Clear Errors":
             return {
                 ...state,
-                err:null
-            }
-        case "User":
-            return {
-                ...state,
-                userInfo:action.user
+                err:null,
             }
         default:
             return state

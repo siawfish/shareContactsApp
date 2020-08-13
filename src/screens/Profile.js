@@ -1,46 +1,51 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Image, Text } from 'react-native'
+import { View, StyleSheet, Image, Text, Alert } from 'react-native'
 import { Entypo, Feather, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { connect } from 'react-redux'
-import { syncUser } from '../store/actions/authActions'
+import { clearErr } from '../store/actions/authActions'
 
 class Profile extends Component {
-    componentDidMount(){
-        const { uid } = this.props.route.params
-        this.props.syncUser(uid)
+
+    componentWillUnmount(){
+        this.props.clearErr()
     }
-    render() {    
-        const { user } = this.props    
+
+    render() { 
+          
+        {this.props.auth == false ? this.props.navigation.navigate('Welcome') : null}
+        const { name, role, twitter, linkedIn, phone, email, loc } = this.props.route.params
+        
         return (
+            
             <View style={styles.container}>
                 <View style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
                     <View>
-                        <Text style={styles.name}>{user.name}</Text>
-                        <Text style={styles.title}>{user.role}</Text>
+                        <Text style={styles.name}>{name && name}</Text>
+                        <Text style={styles.title}>{role && role}</Text>
                     </View>
                 </View>
 
                 <View style={styles.profileIcons}>
                     <View style={styles.iconContainer}>
-                        <Entypo name="twitter-with-circle" size={24} color="black" /><Text> {user.twitter}</Text>
+                        <Entypo name="twitter-with-circle" size={24} color="black" /><Text> {twitter && twitter}</Text>
                     </View>
                     <View style={styles.iconContainer}>
-                        <Entypo name="linkedin-with-circle" size={24} color="black" /><Text> {user.linkedIn}</Text>
+                        <Entypo name="linkedin-with-circle" size={24} color="black" /><Text> {linkedIn && linkedIn}</Text>
                     </View>
                 </View>
 
                 <View style={styles.fields}>
                     <Feather name="phone" size={18} color="black" />
-                    <Text style={styles.info}>{user.phone}</Text>
+                    <Text style={styles.info}>{phone && phone}</Text>
                 </View>
                 <View style={styles.fields}>
                     <MaterialCommunityIcons name="email-open-outline" size={18} color="black" />
-                    <Text style={styles.info}>{user.email}</Text>
+                    <Text style={styles.info}>{email && email}</Text>
                 </View>
                 <View style={styles.fields}>
                     <SimpleLineIcons name="location-pin" size={18} color="black" />
-                    <Text style={styles.info}>{user.loc}</Text>
+                    <Text style={styles.info}>{loc && loc}</Text>
                 </View>
             </View>
         )
@@ -97,14 +102,14 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapDispatchToProps = {
-    syncUser
-}
-
 const mapStateToProps = (state) =>{
     return {
-        user:state.userInfo
+        auth:state.loggedIn,
     }
+}
+
+const mapDispatchToProps= {
+    clearErr
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

@@ -42,7 +42,8 @@ class Register extends Component {
             phone : this.state.phone,
             role : this.state.role,
             twitter : this.state.twitter,
-            linkedIn : this.state.linkedIn
+            linkedIn : this.state.linkedIn,
+            loc:"Kumasi, Ghana"
         }
         const validateName = /^[a-zA-Z ]+$/
         const validateEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/

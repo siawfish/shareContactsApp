@@ -2,22 +2,20 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { connect } from 'react-redux'
-import { syncUser } from '../store/actions/authActions'
 
 class HomeScreen extends Component {
-    componentDidMount(){
-        this.props.syncUser(this.props.cred)
-    }
+    
     scan = () => {
         const { navigation } = this.props
         navigation.navigate('Scanner')
     }
 
     gotoPro = () => {
-        const { navigation } = this.props
-        navigation.navigate('My Profile', {uid:this.props.cred})
+        const { navigation, user } = this.props
+        navigation.navigate('My Profile', {...user})
     }
-    render() {        
+    render() {
+        {this.props.auth == false ? this.props.navigation.navigate('Welcome') : null}
         return (
             <View style={styles.container}>
                 <View style={styles.infoArea}>
@@ -25,7 +23,7 @@ class HomeScreen extends Component {
                     <Text style={styles.info}>Scan this QR below to share your contacts</Text>
                 </View>
                 <View style={styles.barcodeArea}>
-                    <QRCode value={this.props.cred} size={300}/>
+                    <QRCode value={this.props.user.uid} size={300}/>
                 </View>
                 <TouchableOpacity onPress={this.gotoPro} style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
@@ -115,16 +113,11 @@ const styles= StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {        
+const mapStateToProps = (state) => {    
     return {
         auth:state.loggedIn,
-        cred:state.userCred.user.uid,
         user:state.userInfo
     }
 }
 
-const mapDispatchToProps = {
-    syncUser
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+export default connect(mapStateToProps)(HomeScreen)
