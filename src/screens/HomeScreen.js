@@ -27,9 +27,13 @@ class HomeScreen extends Component {
                     <Text style={styles.infoHeader}>Exchange Contact Information</Text>
                     <Text style={styles.info}>Scan this QR below to share your contacts</Text>
                 </View>
-                <View style={styles.barcodeArea}>
-                    <QRCode value={this.props.auth.uid && this.props.auth.uid} size={300}/>
-                </View>
+                {
+                    this.props.auth ? 
+                    <View style={styles.barcodeArea}>
+                        <QRCode value={this.props.auth.uid && this.props.auth.uid} size={300}/>
+                    </View> :
+                    null
+                }
                 {
                 this.props.user ? 
                 <TouchableOpacity onPress={this.gotoPro} style={styles.profileArea}>

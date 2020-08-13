@@ -20,14 +20,14 @@ function BarcodeScanner(props) {
     handleBarCodeScanned = ({ type, data }) => {
         props.syncCon(data)
         setScanned(true);
-        console.log(props.info);
-        props.navigation.navigate('My Profile', {...props.info});
     };
 
     if (scanned === true){
-        if(typeof(props.info)=="undefined"){
+        if(typeof(props.contact)=="undefined"){
             Alert.alert('Sorry!', 'Invalid barcode', [{ text: 'OK', onPress: () => props.navigation.goBack() }], { cancelable: false })
             return false
+        } else if (props.contact!==null){
+            props.navigation.navigate('My Profile', {...props.contact})
         }
         
     }
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state)=> {
     return {
-        user:state.userInfo,
-        info:state.info
+        auth:state.persistedReducer.creds,
+        contact:state.usersReducer.contact
     }
 }
 

@@ -15,6 +15,11 @@ export default function authReducer(state = initState, action){
                 ...state,
                 contact:action.user
             }
+        case "Clear Errors":
+            return {
+                ...state,
+                contact:null
+            }
         default:
             return state;
     }
