@@ -20,6 +20,8 @@ function BarcodeScanner(props) {
     handleBarCodeScanned = ({ type, data }) => {
         props.syncCon(data)
         setScanned(true);
+        console.log(props.info);
+        props.navigation.navigate('My Profile', {...props.info});
     };
 
     if (scanned === true){
@@ -27,8 +29,7 @@ function BarcodeScanner(props) {
             Alert.alert('Sorry!', 'Invalid barcode', [{ text: 'OK', onPress: () => props.navigation.goBack() }], { cancelable: false })
             return false
         }
-        console.log(props.info);
-        props.navigation.navigate('My Profile', {...props.info});
+        
     }
     
     if (hasPermission === false) {

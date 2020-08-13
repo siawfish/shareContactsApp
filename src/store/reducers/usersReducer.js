@@ -8,14 +8,12 @@ export default function authReducer(state = initState, action){
         case "User":
                     return {
                 ...state,
-                loggedIn: true,
-                userInfo:action.user,
-                err:''
+                user:action.user,
             }
         case "Contact":
             return {
                 ...state,
-                info:action.user
+                contact:action.user
             }
         default:
             return state;

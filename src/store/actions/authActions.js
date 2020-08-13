@@ -38,20 +38,9 @@ export function login(email, pass){
         .auth()
         .signInWithEmailAndPassword(email, pass)
         .then((res)=>{
-            var id = res.user.uid;
-            firebase
-            .firestore()
-            .collection('users')
-            .doc(id)
-            .get()
-            .then((res)=>{
-                dispatch({
-                    type:"User",
-                    user:{...res.data(), uid:id}
-                })
-            })
-            .catch((err)=>{
-                console.log(err.message);
+            dispatch({
+                type:"Auth Success",
+                user:res.user
             })
         })
         .catch((err)=>{

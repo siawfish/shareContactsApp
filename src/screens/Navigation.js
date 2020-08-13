@@ -125,7 +125,7 @@ class Navigation extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn:state.loggedIn
+    loggedIn:state.persistedReducer.loggedIn
   }
 }
 

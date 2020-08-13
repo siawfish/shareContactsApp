@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 import QRCode from 'react-native-qrcode-svg'
 import { connect } from 'react-redux'
+import { syncUser } from '../store/actions/authActions'
 
 class HomeScreen extends Component {
+
+    componentDidMount(){
+        this.props.syncUser(this.props.auth.uid)
+    }
     
     scan = () => {
         const { navigation } = this.props
@@ -15,7 +20,7 @@ class HomeScreen extends Component {
         navigation.navigate('My Profile', {...user})
     }
     render() {
-        {this.props.auth == false ? this.props.navigation.navigate('Welcome') : null}
+        {this.props.loggedIn == false ? navigation.navigate('Welcome') : null}
         return (
             <View style={styles.container}>
                 <View style={styles.infoArea}>
@@ -23,15 +28,18 @@ class HomeScreen extends Component {
                     <Text style={styles.info}>Scan this QR below to share your contacts</Text>
                 </View>
                 <View style={styles.barcodeArea}>
-                    <QRCode value={this.props.user.uid} size={300}/>
+                    <QRCode value={this.props.auth.uid && this.props.auth.uid} size={300}/>
                 </View>
+                {
+                this.props.user ? 
                 <TouchableOpacity onPress={this.gotoPro} style={styles.profileArea}>
                     <Image source={require('../../assets/pp.jpg')} style={styles.avatar}/>
                     <View>
                         <Text style={styles.name}>{this.props.user.name && this.props.user.name}</Text>
                         <Text style={styles.title}>{this.props.user.role && this.props.user.role}</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> : null
+                }
                 <View style={styles.addConnectArea}>
                     <Text>Want to add new connection?</Text>
                     <TouchableOpacity onPress={this.scan} style={styles.btn}>
@@ -113,11 +121,16 @@ const styles= StyleSheet.create({
     }
 })
 
-const mapStateToProps = (state) => {    
+const mapStateToProps = (state) => {   
     return {
-        auth:state.loggedIn,
-        user:state.userInfo
+        loggedIn:state.loggedIn,
+        auth:state.persistedReducer.creds,
+        user:state.usersReducer.user
     }
 }
 
-export default connect(mapStateToProps)(HomeScreen)
+const mapDispatchToProps = {
+    syncUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
